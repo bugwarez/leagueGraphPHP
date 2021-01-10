@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <title>Summoner Stats</title>
+</head>
+
+<body>
+    <?php include "../../config/config.php" ?>
+    <?php include "../../components/navbar.php" ?>
+    <?php
+    //!Variables
+    $summoner_name = $_GET["summoner_name"];
+    $summoner_server = $_GET["summoner_server"];
+    //! Data URL'S
+    //? get summoner
+    $get_summoner_url = "https://tr1.api.riotgames.com/lol/summoner/v4/summoners/by-name/$summoner_name?api_key=$api_key";
+    $get_summoner_json = file_get_contents("$get_summoner_url");
+    $get_summoner_obj = json_decode($get_summoner_json);
+    //?--end get summoner
+    //!------------
+    //*---get Champs
+    $get_champs = "http://ddragon.leagueoflegends.com/cdn/11.1.1/data/en_US/champion.json";
+    $get_champs_json = file_get_contents("$get_champs");
+    $get_champs_obj = json_decode($get_champs_json, true);
+    //*----END Champs
+    //!------------
+    //*---get summoner matches
+    $account_id = $get_summoner_obj->accountId;
+    $get_summoner_matches_url = "https://tr1.api.riotgames.com/lol/match/v4/matchlists/by-account/$get_summoner_obj->accountId?api_key=$api_key";
+    $get_summoner_matches_json = file_get_contents("$get_summoner_matches_url");
+    $get_summoner_matches_obj = json_decode($get_summoner_matches_json, true);
+    //*----END GET SUMMONER MATCHES
+    //!------------
+    //?----get summoner League
+    //NOTE:DONT FORGET TO ADD API KEY
+    $get_summoner_league_url = "https://tr1.api.riotgames.com/lol/league/v4/entries/by-summoner/Aivco5kwIv7Pa-PJwnq3w7lXXHoT9eF5LzOuzVQA-_6F4h8";
+    $get_summoner_league_json = file_get_contents("$get_summoner_league_url");
+    $get_summoner_league_obj = json_decode($get_summoner_league_json, true);
+    ?>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-sm">
+                <?php echo "<img class='summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/profileicon/$get_summoner_obj->profileIconId.png' class='img-fluid' alt='LeagueIcon'>"; ?>
+                <p data-toggle='tooltip' title='Seviye' class="summoner_level">
+                    <?= $get_summoner_obj->summonerLevel; ?>
+                </p>
+                <button style="display: inline-block;color:whitesmoke;margin-left:
+                1vw;margin-top:6vh;margin-right: 0;" type="button" class="btn btn-primary">Yenile</button>
+                <div class="row">
+                    <div class="col-sm">
+                        <?php echo "<h4 class='text-left pt-2'>$get_summoner_obj->name</h4>" ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9 p-0 m-0">
+                <div class="card summoner_league_card">
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row text-center">
+                                <!-- //TODO:Show Unranked icon if user has no leagueS -->
+                                <div class="col-sm">
+                                    <img src="/assets/images/tier_emblems/Emblem_Bronze.png" class="img-fluid summoner_rank" alt="Responsive image">
+                                </div>
+                                <div class="col-sm">
+                                    <img src="/assets/images/tier_emblems/Emblem_Silver.png" class="img-fluid summoner_rank" alt="Responsive image">
+                                </div>
+                                <div class="col-sm">
+                                    <img src="/assets/images/tier_emblems/Emblem_Gold.png" class="img-fluid summoner_rank" alt="Responsive image">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-sm">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Son 10 Maç İstatistiği</h5>
+
+                            <!-- //TODO:WIN/LOSE RATE in "Drilldown" chart -->
+                            <div class="container">
+                                <div class="row mt-5">
+                                    <div class="col-sm">
+                                        <div class="card mb-3" style="max-width: 540px;">
+                                        <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg" class="card-img-top" style="width: 8vw;" alt="...">
+                                            <div class="row no-gutters">
+                                                
+                                                <div class="col-md-8">
+                                               
+                                                    <?php
+                                                    //! GET CHAMP DATA
+                                                    // foreach($get_summoner_matches_obj["matches"] as $summoner_matches_data) {
+
+                                                    //     echo "<div class='card mb-3' style='max-width: 540px;'>
+                                                    //     <div class='row g-0'>
+                                                    //       <div class='col-md-4'>
+                                                    //       "; foreach($get_champs_obj['data'] as $champion)
+                                                    //       {
+                                                    //           if($champion['key'] == $summoner_matches_data['champion'])
+                                                    //           {
+                                                    //             echo "<img width='50' src='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$champion[id]_0.jpg'>";
+                                                    //           }
+                                                    //       };
+                                                    //       "
+                                                    //       <img width='100' src='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$summoner_matches_data[champion]_0.jpg'/>
+                                                    //       </div>
+                                                    //       <div class='col-md-8'>
+                                                    //         <div class='card-body'>
+                                                    //           <h5 class='card-title'>$summoner_matches_data[name]</h5>
+                                                    //           <p class='card-text'>Lane:" . $summoner_matches_data['lane'] . "</p>
+                                                    //           <p class='card-text'><small class='text-muted'>Last updated 3 mins ago</small></p>
+                                                    //         </div>
+                                                    //       </div>
+                                                    //     </div>
+                                                    //   </div>";
+
+                                                    // }
+                                                    
+                                                    
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+
+</html>
