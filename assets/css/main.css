@@ -20,6 +20,7 @@ p{
     font-size: 1em !important;
 }
 .summoner_icon {
+    margin-left: 2vw;
     position: relative;
     display: inline-block;
     border: 4px solid #0F76E1;

@@ -43,16 +43,16 @@
     ?>
     <div class="container">
         <div class="row mt-4">
-            <div class="col-sm">
+            <div class="col-2">
                 <?php echo "<img class='summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/profileicon/$get_summoner_obj->profileIconId.png' class='img-fluid' alt='LeagueIcon'>"; ?>
                 
                 <div class="row">
                     <div class="col-sm">
-                        <?php echo "<h4 class='text-left pt-2'><span class='badge badge_text alert-primary'>$get_summoner_obj->name</span> - <span class='badge badge_text alert-primary'>$get_summoner_obj->summonerLevel</span></h4>" ?>
+                        <?php echo "<h4 class='text-left pt-2'><span class='badge badge_text alert-primary'>$get_summoner_obj->name - $get_summoner_obj->summonerLevel</span></h4>" ?>
                     </div>
                 </div>
             </div>
-            <div class="col-9 p-0 m-0">
+            <div style="margin-left: 2vw !important;" class="col-9 p-0 m-0">
                 <div class="card summoner_league_card">
                     <div class="card-body">
                         <div class="container">
@@ -81,6 +81,7 @@
                         <div class="card-body">
                             <h5>Son 10 Maç İstatistiği</h5>
                             <!-- //TODO:WIN/LOSE RATE in "Drilldown" chart -->
+                            <!-- //TODO:DONT FORGET TO PUSH UPDATED CODE TO GITHUB -->
                             <?php
                            
                             foreach (array_slice($get_summoner_matches_obj["matches"], 0, 10) as $summoner_matches_data) {
