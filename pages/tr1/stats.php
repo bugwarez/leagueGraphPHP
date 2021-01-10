@@ -82,8 +82,7 @@
                             <h5>Son 10 Maç İstatistiği</h5>
                             <!-- //TODO:WIN/LOSE RATE in "Drilldown" chart -->
                             <?php
-                            git config --global user.email "you@example.com"
-                            git config --global user.name "Your Name"
+                           
                             foreach (array_slice($get_summoner_matches_obj["matches"], 0, 10) as $summoner_matches_data) {
                                 echo "
                             <div class='card mb-3'><!-- FOREACH START -->
