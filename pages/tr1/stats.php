@@ -45,7 +45,7 @@
         <div class="row mt-4">
             <div class="col-2">
                 <?php echo "<img class='summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/profileicon/$get_summoner_obj->profileIconId.png' class='img-fluid' alt='LeagueIcon'>"; ?>
-                
+
                 <div class="row">
                     <div class="col-sm">
                         <?php echo "<h4 class='text-left pt-2'><span class='badge badge_text alert-primary'>$get_summoner_obj->name - $get_summoner_obj->summonerLevel</span></h4>" ?>
@@ -82,8 +82,9 @@
                             <h5>Son 10 Maç İstatistiği</h5>
                             <!-- //TODO:WIN/LOSE RATE in "Drilldown" chart -->
                             <!-- //TODO:DONT FORGET TO PUSH UPDATED CODE TO GITHUB -->
+                            <!-- //TODO:When this project finish, go for faceit style custom matchmaking and ranking website -->
                             <?php
-                           
+
                             foreach (array_slice($get_summoner_matches_obj["matches"], 0, 10) as $summoner_matches_data) {
                                 echo "
                             <div class='card mb-3'><!-- FOREACH START -->
@@ -109,17 +110,20 @@
                                 //!------------
 
                                 //TODO: GET MATCH DATA.
-
+                                //TODO: MATCH INGAME DATA JSON WITH PLAYER
                                 foreach ($get_summoner_match_data_obj as $gameData) {
                                     if ($get_summoner_match_data_obj['gameId'] == $summoner_matches_data['gameId']) {
-                                        //echo "asssss - " . $get_summoner_match_data_obj['gameMode'];
+                                        echo "dataobj-champ::" . $get_summoner_match_data_obj['participants'][9]['championId'];
+                                        echo "<br>";
+                                        
+                                        echo "<br>";
+                                        echo "matches-champ::" . $summoner_matches_data['champion'];
                                         echo "</div>
                                             <div class='col-md-2 mt-4 text-center match_history_col'>
                                                 <div class='container'>
                                                 <h5 class='p-0 m-0'>$champion[name]</h5>
                                                     <div class='row'>
                                                         <div class='col-6'>
-                                                            SPELL_1.png
                                                         </div>
                                                         <div class='col-6'>
                                                            SPELL_2.png
@@ -140,12 +144,36 @@
                                             <div class='col-md-3 p-0 m-0 text-center'>
                                             <div class='vl'></div>
                                                 <div class='card-body text-left mt-2'>
-                                                    <p class='card-title p-0 m-0'><span class='badge badge_text alert-success'>K/D/A</span></p>
-                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-primary'>CHAMP_LEVEL</span></p>
+                                                    ";
+
+                                        if ($get_summoner_match_data_obj['teams']['1']['win'] == "Win") {
+                                            $get_summoner_match_data_obj['teams']['1']['win'] = $match_win;
+                                            $match_win = "Win <i class='far fa-smile fa-lg'></i>";
+                                            echo "<p class='card-title p-0 m-0'>
+                                                      <span class='badge badge_text alert-success'>";
+
+                                            echo $match_win;
+                                            echo "
+                                                      </span>
+                                                      </p>";
+                                        } elseif ($get_summoner_match_data_obj['teams']['1']['win'] == "Fail") {
+                                            $get_summoner_match_data_obj['teams']['1']['win'] = $match_lose;
+                                            $match_lose = "Lose <i class='far fa-frown fa-lg'></i>";
+                                            echo "<p class='card-title p-0 m-0'>
+                                                      <span class='badge badge_text alert-danger'>";
+
+                                            echo $match_lose;
+                                            echo "
+                                                      </span>
+                                                      </p>";
+                                        }
+
+                                        echo "
+                                                     
+                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-primary'>K/D/A</span></p>
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-warning'>CS_STATS</span></p>
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-danger'>KILL_PART</span></p>
                                                     <p class='card-title p-0 m-0'><span class='badge badge_text alert-info'>$summoner_matches_data[lane]</span></p>
-                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-secondary'>$gameData[gameMode]</span></p>
                                                 </div>
                                             </div>
                                             <div class='col-md-5 p-0 m-0 text-center'>
@@ -164,6 +192,8 @@
                                     }
                                 }
                             }
+
+
                             ?>
 
 
