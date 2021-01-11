@@ -28,6 +28,19 @@
     $get_champs_obj = json_decode($get_champs_json, true);
     //*----END Champs
     //!------------
+    //!------------
+    //*---get SummonerSpells
+    $get_SummonerSpells = "http://ddragon.leagueoflegends.com/cdn/11.1.1/data/en_US/summoner.json";
+    $get_SummonerSpells_json = file_get_contents("$get_SummonerSpells");
+    $get_SummonerSpells_obj = json_decode($get_SummonerSpells_json, true);
+    //*----END SummonerSpells
+    
+    //*---get SummonerRunes
+    $get_SummonerRunes = "http://ddragon.leagueoflegends.com/cdn/11.1.1/data/en_US/runesReforged.json";
+    $get_SummonerRunes_json = file_get_contents("$get_SummonerRunes");
+    $get_SummonerRunes_obj = json_decode($get_SummonerRunes_json, true);
+    //*----END SummonerRunes
+    //!------------
     //*---get summoner match history
     $account_id = $get_summoner_obj->accountId;
     $get_summoner_matches_url = "https://tr1.api.riotgames.com/lol/match/v4/matchlists/by-account/$get_summoner_obj->accountId?api_key=$api_key";
@@ -35,10 +48,21 @@
     $get_summoner_matches_obj = json_decode($get_summoner_matches_json, true);
     //*----END GET SUMMONER MATCH HISTORY
     //!------------
-
+    //!------------
+    //*---get summoner Masteries
+    $summoner_id = $get_summoner_obj->id;
+    
+    $get_summoner_masteries_url = "https://tr1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/$summoner_id?api_key=$api_key";
+    $get_summoner_masteries_json = file_get_contents("$get_summoner_masteries_url");
+    $get_summoner_masteries_obj = json_decode($get_summoner_masteries_json, true);
+    //*----END GET SUMMONER Masteries
+    //!------------
     //?----get summoner League
     //NOTE:DONT FORGET TO ADD API KEY
-
+    
+    $get_summoner_league = "https://tr1.api.riotgames.com/lol/league/v4/entries/by-summoner/$summoner_id?api_key=$api_key";
+    $get_summoner_league_json = file_get_contents("$get_summoner_league");
+    $get_summoner_league_obj = json_decode($get_summoner_league_json, true);
 
     ?>
     <div class="container">
@@ -53,21 +77,59 @@
                 </div>
             </div>
             <div style="margin-left: 2vw !important;" class="col-9 p-0 m-0">
-                <div class="card summoner_league_card">
+                <div class="card summoner_league_card p-0 m-0">
+                    <div class="card-body pl-2 m-0">
+                        <div class="container p-0 m-0">
+                            <div class="row">
+                                <?php
+                                foreach ($get_champs_obj['data'] as $fav_champion) {
+                                    if ($fav_champion['key'] == $get_summoner_masteries_obj[0]['championId']) {
+                                        echo "<div class='fav_champ_banner text-white'><img class='fav_banner' loading='lazy'
+                                                src='http://lolg-cdn.porofessor.gg/img/banners/champion-banners/$fav_champion[key].jpg' alt='$fav_champion[id]'>
+                                                <div class='card-img-overlay text-left'>
+                                                    <p class='card-text mt-3 mb-0 p-0'>$fav_champion[id]</p>
+                                                    <p class='card-text p-0 m-0'>" . $get_summoner_masteries_obj[0]['championLevel'] . " Level</p>
+                                                    <p class='card-text p-0 m-0'> " . $get_summoner_masteries_obj[0]['championPoints'] . " Points</p>
+                                                </div>
+                                                </div>";
+                                        break;
+                                    }
+                                }
+                                
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card summoner_league_card mt-3">
                     <div class="card-body">
                         <div class="container">
                             <div class="row text-center">
-                                <!-- //TODO:Show Unranked icon if user has no leagueS -->
-                                <div class="col-sm">
-                                    <img src="/assets/images/tier_emblems/Emblem_Bronze.png" class="img-fluid summoner_rank" alt="Responsive image">
+                                <!-- //TODO:Show Unranked icon if user has no league -->
+                                <?php
+                                echo"
+                                <div class='col-sm'>
+                                    <img src='/assets/images/tier_emblems/BRIO.png' class='img-fluid summoner_rank' alt='Responsive image'>
+                                <p>rank</p>
                                 </div>
-                                <div class="col-sm">
-                                    <img src="/assets/images/tier_emblems/Emblem_Silver.png" class="img-fluid summoner_rank" alt="Responsive image">
+                                <div class='col-sm '>
+                                    <img src='/assets/images/tier_emblems/" . $get_summoner_league_obj[0]['tier']. ".png' class='img-fluid summoner_rank' alt='Responsive image'>
+                                    ";
+                                    if($get_summoner_league_obj[0]['queueType'] = "RANKED_SOLO_5x5")
+                                    {
+                                        $queueType = "Ranked Solo/Duo";
+                                    }
+                                    echo"
+                                    <p class='p-0 m-0'>$queueType </p>
+                                    <p class='p-0 m-0'>" . $get_summoner_league_obj[0]['tier']. " " . $get_summoner_league_obj[0]['rank']. " " . $get_summoner_league_obj[0]['leaguePoints']. " LP</p>
+                                    </div>
+                                <div class='col-sm'>
+                                    <img src='/assets/images/tier_emblems/Emblem_Gold.png' class='img-fluid summoner_rank' alt='Responsive image'>
                                 </div>
-                                <div class="col-sm">
-                                    <img src="/assets/images/tier_emblems/Emblem_Gold.png" class="img-fluid summoner_rank" alt="Responsive image">
-
-                                </div>
+                                ";
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -84,7 +146,7 @@
                             <!-- //TODO:DONT FORGET TO PUSH UPDATED CODE TO GITHUB -->
                             <!-- //TODO:When this project finish, go for faceit style custom matchmaking and ranking website -->
                             <?php
-
+                            
                             foreach (array_slice($get_summoner_matches_obj["matches"], 0, 10) as $summoner_matches_data) {
                                 echo "
                             <div class='card mb-3'><!-- FOREACH START -->
@@ -109,33 +171,85 @@
                                 //*----END GET SUMMONER MATCH DATA
                                 //!------------
 
+
+                                
+                                
                                 //TODO: GET MATCH DATA.
                                 //TODO: MATCH INGAME DATA JSON WITH PLAYER
                                 foreach ($get_summoner_match_data_obj as $gameData) {
                                     if ($get_summoner_match_data_obj['gameId'] == $summoner_matches_data['gameId']) {
-                                        echo "dataobj-champ::" . $get_summoner_match_data_obj['participants'][9]['championId'];
-                                        echo "<br>";
                                         
-                                        echo "<br>";
-                                        echo "matches-champ::" . $summoner_matches_data['champion'];
+                                        //! CODE DIFFERENT FOREACH FOR EVERY ARRAY
+                                foreach ($get_summoner_match_data_obj['participants'] as $game_participants_data) {
+                                    if ($game_participants_data['championId'] == $summoner_matches_data['champion']) {
+                                        break;
+                                    }
+                                }
                                         echo "</div>
                                             <div class='col-md-2 mt-4 text-center match_history_col'>
                                                 <div class='container'>
                                                 <h5 class='p-0 m-0'>$champion[name]</h5>
-                                                    <div class='row'>
-                                                        <div class='col-6'>
+                                                    ";
+                                                    
+                                                    foreach ($get_SummonerSpells_obj['data'] as $game_spell_data) {
+                                                        if ($game_spell_data['key'] == $game_participants_data['spell1Id']) {
+                                                            echo"
+                                                            <div class='row'>
+                                                            <div class='col-6 p-0 m-0'>
+                                                            <img class='summoner_spell' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$game_spell_data[id].png'>
+                                                            </div>
+                                                            
+                                                        
+                                                        ";
+                                                            break;
+                                                        }
+                                                    }
+                                                    foreach ($get_SummonerSpells_obj['data'] as $game_spell_data) {
+                                                        if ($game_spell_data['key'] == $game_participants_data['spell2Id']) {
+                                                            echo"
+                                                            <div class='col-6 p-0 m-0'>
+                                                            <img class='summoner_spell' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$game_spell_data[id].png'>
+
+                                                            </div>
                                                         </div>
-                                                        <div class='col-6'>
-                                                           SPELL_2.png
+                                                        ";
+                                                            break;
+                                                        }
+                                                    }
+                                                    foreach ($get_SummonerRunes_obj as $game_rune_data) {
+                                                        
+                                                       
+                                                        if ($game_rune_data['id'] == $game_participants_data['stats']['perkPrimaryStyle']) {
+                                                            
+                                                            echo"
+                                                            <div class='row'>
+                                                        <div class='col-6 p-0 m-0'>
+                                                        <img class='summoner_rune p-0 mt-1' src='http://ddragon.leagueoflegends.com/cdn/img/$game_rune_data[icon]'>
                                                         </div>
-                                                    </div>
-                                                    <div class='row'>
-                                                        <div class='col-6'>
-                                                            RUNE_1.png
+                                                            
+                                                        ";
+                                                            break;
+                                                        }
+                                                    }
+                                                    foreach ($get_SummonerRunes_obj as $game_rune_data) {
+                                                        
+                                                       
+                                                        if ($game_rune_data['id'] == $game_participants_data['stats']['perkSubStyle']) {
+                                                            
+                                                            echo"
+                                                            <div class='col-6 p-0 m-0'>
+                                                            <img class='summoner_rune p-0 mt-1' src='http://ddragon.leagueoflegends.com/cdn/img/$game_rune_data[icon]'>
                                                         </div>
-                                                        <div class='col-6'>
-                                                           RUNE_2.png
-                                                        </div>
+                                                            
+                                                            
+                                                        ";
+                                                            break;
+                                                        }
+                                                    }
+                                                      //echo"as" . $get_SummonerRunes_obj;  
+                                                   echo"
+                                                    
+                                                        
                                                         
                                                     </div>
                                                 </div>
@@ -170,16 +284,24 @@
 
                                         echo "
                                                      
-                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-primary'>K/D/A</span></p>
-                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-warning'>CS_STATS</span></p>
-                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-danger'>KILL_PART</span></p>
+                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-primary'>
+                                                    " . $game_participants_data['stats']['kills'] . "
+                                                    / " . $game_participants_data['stats']['deaths'] . "
+                                                    / " . $game_participants_data['stats']['assists'] . "
+                                                    </span>
+                                                    </p>
+                                                    ";
+                                                        $minion_count = $game_participants_data['stats']['totalMinionsKilled'] + $game_participants_data['stats']['neutralMinionsKilled'];
+                                                    echo"
+                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-warning'>$minion_count CS</span></p>
+                                                    <p class='card-text p-0 m-0'><span class='badge badge_text alert-danger'>" . $game_participants_data['stats']['totalDamageDealtToChampions'] ." Damage To Champions</span></p>
                                                     <p class='card-title p-0 m-0'><span class='badge badge_text alert-info'>$summoner_matches_data[lane]</span></p>
                                                 </div>
                                             </div>
                                             <div class='col-md-5 p-0 m-0 text-center'>
                                             <div class='vl'></div>
                                                 <div class='card-body mt-4'>
-                                                    <h5 class='card-title'>K/D/A</h5>
+                                                   
                                                     <h6 class='card-text'>BUILD.PNG</h6>
                                                 </div>
                                             </div>
@@ -190,6 +312,7 @@
                                         ";
                                         break;
                                     }
+                                
                                 }
                             }
 

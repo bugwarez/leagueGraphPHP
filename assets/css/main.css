@@ -36,13 +36,47 @@ p{
     font-size: 1.4em;
     
 }
+.summoner_spell
+{
+    padding: 0;
+    border-radius: 5px;
+    border: 2.7px solid #7994A1;
+    margin-top: 2vh;
+    width: 3vw;
+}
+.summoner_rune
+{
+    padding: 0;
+    border-radius: 5px;
+    border: 2.7px solid #7994A1;
+    margin-top: 2vh;
+    width: 2.2vw;
+}
 .summoner_league_card
 {
-    height: 28vh;
+    height: 34vh;
 }
 .summoner_rank
 {
     width: 9vw;
+}
+.fav_champ_banner
+{
+    padding: 0 !important;
+    margin:0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+.fav_champ_banner{
+    border-radius: 6px;
+    float: left !important;
+    padding: 0 !important;
+    margin:0 !important;
+    flex-shrink: 0;
+    min-width: 10%;
+    min-height: 110%
 }
 .vl {
     position: absolute;
