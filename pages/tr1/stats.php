@@ -68,7 +68,46 @@
     <div class="container">
         <div class="row mt-4">
             <div class="col-2">
-                <?php echo "<img class='summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/profileicon/$get_summoner_obj->profileIconId.png' class='img-fluid' alt='LeagueIcon'>"; ?>
+                
+            <?php 
+            switch ($get_summoner_league_obj[0]['tier']) {
+                case "IRON":
+                    $league_border = "iron";
+                    break;
+                case "BRONZE":
+                    $league_border = "bronze";
+                    break;
+                case "SILVER":
+                    $league_border = "silver";
+                    break;
+                case "GOLD":
+                    $league_border = "gold";
+                    break;
+                case "PLATINUM":
+                    $league_border = "platinum";
+                    break;
+                case "DIAMOND":
+                    $league_border = "diamond";
+                        break;
+                case "MASTER":
+                    $league_border = "master";
+                        break;
+                case "GRANDMASTER":
+                    $league_border = "grandmaster";
+                        break;
+                case "CHALLENGER":
+                    $league_border = "challenger";
+                        break;
+                }
+
+            /*if($get_summoner_league_obj[0]['tier'] == "SILVER")
+            {
+                $league_border = "silver";
+            }*/
+            
+            ?>
+
+                <?php echo "<img style='border-image: url(https://opgg-static.akamaized.net/images/borders2/$league_border.png) 12 stretch;' class='summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/profileicon/$get_summoner_obj->profileIconId.png' class='img-fluid' alt='LeagueIcon'>"; ?>
 
                 <div class="row">
                     <div class="col-sm">
