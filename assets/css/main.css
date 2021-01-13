@@ -21,7 +21,7 @@ p{
 }
 .summoner_icon {
     padding: 0 !important;
-    margin-left: 1vw;
+    margin-left: 1.7vw;
     position: relative;
     display: inline-block;
     border: 20px solid transparent;
@@ -48,7 +48,7 @@ p{
 }
 .summoner_rune
 {
-    padding: 0;
+    padding: .6vh;
     border-radius: 5px;
     border: 2.7px solid #7994A1;
     margin-top: 2vh;
@@ -56,6 +56,11 @@ p{
 }
 .summoner_league_card
 {
+    height: 34vh;
+}
+.summoner_fav_card
+{
+    border: 0 !important;
     height: 34vh;
 }
 .summoner_rank
@@ -80,9 +85,38 @@ p{
     min-width: 10%;
     min-height: 110%
 }
+.item_image
+{
+    padding: 0!important;
+    border: .2vw solid #7994A1;
+    margin: .3vw !important;
+    width: 3.4vw !important;
+}
+.none_item_image
+{
+    
+    background-color: transparent;
+    padding: 0!important;
+    border: .2vw solid #7994A1;
+    margin: .3vw !important;
+    width: 3.4vw !important;
+}
 .vl {
     position: absolute;
     top: 2.7vh;
     border-left: 1.9px solid#7994A1;
     height: 30vh;
   }
+
+  .nav-pills > li > a.active {
+    background-color: #198754 !important;
+    color: #ffffff !important;
+  }
+  .nav-link-color {
+    color: #ffffff;
+  }
+  /* !region tooltip*/
+  
+
+
+  
