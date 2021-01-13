@@ -94,12 +94,19 @@ p{
 }
 .none_item_image
 {
-    
     background-color: transparent;
     padding: 0!important;
     border: .2vw solid #7994A1;
     margin: .3vw !important;
     width: 3.4vw !important;
+}
+.live_summoner_icon
+{
+    margin-right: .4vw;
+    overflow: auto;
+    border-radius: 6px;
+    border: 2px solid #f8f8f8;
+    width: 2.6vw;
 }
 .vl {
     position: absolute;

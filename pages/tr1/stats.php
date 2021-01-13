@@ -59,11 +59,11 @@
                     </div>
                 </div>
             </div>
-            <div style="margin-left: 2vw !important;" class="col-9 p-0 m-0">
+            <div style="margin-left: 4vw !important;" class="col-9 p-0 m-0">
                 <div class="card summoner_fav_card p-0 m-0">
-                    <div class="card-body pl-2 m-0">
+                    <div class="card-body pl-3 m-0">
                         <div class="container p-0 m-0">
-                            <div class="row">
+                            <div class="row ml-3">
                                 <?php
                                 foreach ($get_champs_obj['data'] as $fav_champion) {
                                     if ($fav_champion['key'] == $get_summoner_masteries_obj[0]['championId']) {
@@ -352,20 +352,66 @@
                                 ?>
                                 <div class="card-group">
                                     <?php
-                                     //TODO:Foreach Loop Doesnt work
-                                    foreach (array_slice($get_live_game_obj['participants'], 0, 4) as $live_game_data) {
+                                    //TODO:Foreach Loop Doesnt work
+                                    //!TUTORIAL VIDEO IS SAVED IN API TAB
+                                    
+                                    foreach ($get_live_game_obj['participants'] as $blueTeam) {
+                                        if ($blueTeam['teamId'] == 100) {
                                             echo "
-                                            <div class='card'>
-                                            <img class='card-img-top' src='...' alt='Card image cap'>
+                                            <div class='card text-black mb-3' style='max-width: 14rem;'>
+                                            <div class='card-header bg-primary text-white'>
+                                            <img class='live_summoner_icon mr-0' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/profileicon/$blueTeam[profileIconId].png'>" . $blueTeam['summonerName'] . "</div>
                                             <div class='card-body'>
-                                                <h5 class='card-title'>" . $live_game_data['championId'] . "</h5>
-                                                <p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                <p class='card-text'><small class='text-muted'>Last updated 3 mins ago</small></p>
-                                            </div>
-                                        </div>
                                             ";
-                                            break;
+                                            foreach ($get_champs_obj['data'] as $champion) {
+                                                if ($champion['key'] == $blueTeam['championId']) {
+                                                    echo "<img loading='lazy'
+                                                        src='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$champion[id]_0.jpg' class='card-img' alt='...'>";
+                                                    
+                                                }
+                                            }
+                                            //TODO!FIX STYLING AND MAKE FOREACH FOR RED TEAM
+                                              echo"
+                                              <p class='card-text'>
+                                              <div class='row'>
+                                                    <div class='col-sm p-0 m-0'>
+                                                    ";
+                                                    foreach ($get_SummonerSpells_obj['data'] as $live_game_spell_data) {
+                                                        if ($live_game_spell_data['key'] == $blueTeam['spell1Id']) {
+                                                            echo "
+                                                           
+                                                            <img class='live_summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$live_game_spell_data[id].png'>
+                                                            
+                                                                ";
+                                                            
+                                                        }
+                                                    }
+                                                    foreach ($get_SummonerSpells_obj['data'] as $live_game_spell_data) {
+                                                        if ($live_game_spell_data['key'] == $blueTeam['spell2Id']) {
+                                                            echo "
+                                                           
+                                                            <img class='live_summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$live_game_spell_data[id].png'>
+                                                            
+                                                                ";
+                                                            
+                                                        }
+                                                    }
+                                                    echo"
+                                                    </div>
+                                                    <div class='col-sm'>
+                                                    ";
+
+                                                    
+                                                    echo"
+                                                    </div>
+                                                    
+                                                </div>
+                                              </p>
+                                            </div>
+                                          </div>
+                                                ";
                                         }
+                                    }
                                     ?>
                                 </div>
                             </div>

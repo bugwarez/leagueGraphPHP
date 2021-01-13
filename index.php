@@ -20,6 +20,7 @@ if (isset($_POST['summoner_name'])) {
     <div class="alert alert-success text-center p-2" role="alert">
         ♥ This Website is Under Maintenance ♥
     </div>
+    <!-- //! MAKE A LOADER FOR LONG LOAD TIMES(FINDING YOUR SUMMONER... , PACKAGING YOUR LEAGUE..., ETC) -->
     <div class="container text-center">
         <div class="row mt-5">
         
