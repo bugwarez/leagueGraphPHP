@@ -108,16 +108,16 @@
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <!-- //!Match History Tab -->
                 <div class="row mt-2">
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="text-center">Recent Matches</h5>
-                                <!-- //TODO:WIN/LOSE RATE in "Drilldown" chart -->
-                                <!-- //TODO:DONT FORGET TO PUSH UPDATED CODE TO GITHUB -->
-                                
-                                <?php
+                    <div class="col-sm mt-0">
+                        <div class="card mt-0">
+                            <div class="card-body mt-0">
 
-                                foreach (array_slice($get_summoner_matches_obj["matches"], 0, 5) as $summoner_matches_data) {
+                                <h5 class="text-center">Recent Matches</h5>
+
+                                <!-- //TODO:DONT FORGET TO PUSH UPDATED CODE TO GITHUB -->
+
+                                <?php
+                                foreach (array_slice($get_summoner_matches_obj["matches"], 0, 10) as $summoner_matches_data) {
                                     echo "
                             <div class='card mb-3'><!-- FOREACH START -->
                                 <div class='row'>
@@ -144,7 +144,7 @@
 
 
 
-                                    //TODO!GET LANE ICONS BY NAME
+                                    
                                     foreach ($get_summoner_match_data_obj as $gameData) {
                                         if ($get_summoner_match_data_obj['gameId'] == $summoner_matches_data['gameId']) {
 
@@ -185,7 +185,7 @@
                                                     break;
                                                 }
                                             }
-                                            
+
                                             foreach ($get_SummonerRunes_obj as $game_rune_data) {
 
 
@@ -216,7 +216,10 @@
                                                     break;
                                                 }
                                             }
-                                            //TODO! GAME TIME
+                                            echo "<p class='mt-2'>
+                                            <img class='summoner_position' src='../../assets/images/positions/$summoner_matches_data[lane]$summoner_matches_data[role].png'>
+                                            </p>";
+                                            
                                             echo "
                                                     
                                                         
@@ -251,7 +254,8 @@
                                                       </span>
                                                       </p>";
                                             }
-
+                                            
+                                            
                                             echo "
                                                      
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-primary'>
@@ -261,22 +265,25 @@
                                                     </span>
                                                     </p>
                                                     ";
+
                                             $minion_count = $game_participants_data['stats']['totalMinionsKilled'] + $game_participants_data['stats']['neutralMinionsKilled'];
-                                             //TODO! KEY RUNE ICONS INSTEAD OF TYPE ICON
+                                            //TODO! KEY RUNE ICONS INSTEAD OF TYPE ICON
                                             //TODO! Game History card background depends on match end 
                                             echo "
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-warning'>$minion_count CS</span></p>
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-danger'>" . $game_participants_data['stats']['totalDamageDealtToChampions'] . " Damage</span></p>
-                                                    <p class='card-title p-0 m-0'><span class='badge badge_text alert-info'>$summoner_matches_data[lane]</span></p>
-                                                </div>
+                                                    <p class='card-title p-0 m-0'><span class='badge badge_text alert-info'>" . date('i' , $get_summoner_match_data_obj['gameDuration']) ."m " . date('s' , $get_summoner_match_data_obj['gameDuration']) ."s</span></p>
+                                                    
+
+                                                    </div>
                                             </div>
                                             <div class='col-md-5 p-0 m-0 text-center'>
                                             <div class='vl'></div>
                                                 <div class='card-body mt-4'>
                                                 ";
-                                                //TODO! VISION SCORE
-                                                //TODO! Item Data on hover 
-                                                //TODO! INGAME DATA IN DROPDOWN MENU FOR RECENT MATCHES
+                                            //TODO! VISION SCORE
+                                            //TODO! Item Data on hover 
+                                            //TODO! INGAME DATA IN DROPDOWN MENU FOR RECENT MATCHES
                                             #region //!Item Slots
                                             //!Item Slots
                                             $item0 = $game_participants_data['stats']['item0'];
@@ -339,7 +346,7 @@
 
 
                                 ?>
-               
+
 
                             </div>
                         </div>
@@ -369,7 +376,7 @@
                                                         src='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$champion[id]_0.jpg' class='card-img' alt='...'>";
                                                 }
                                             }
-                                            
+
                                             echo "
                                               <p class='card-text'>
                                               <div class='row'>
@@ -421,9 +428,9 @@
                             <div class="card-body">
                                 <div class="card-group">
                                     <?php
-//TODO!lIVE SUMMONER RUNES
-//TODO!SUMMONERS LEAGUES
-//TODO!GAME TIME
+                                    //TODO!lIVE SUMMONER RUNES
+                                    //TODO!SUMMONERS LEAGUES
+                                    //TODO!GAME TIME
                                     foreach ($get_live_game_obj['participants'] as $redTeam) {
                                         if ($redTeam['teamId'] == 200) {
                                             echo "
@@ -438,7 +445,7 @@
                                                         src='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$champion[id]_0.jpg' class='card-img' alt='...'>";
                                                 }
                                             }
-                                            
+
                                             echo "
                                               <p class='card-text'>
                                               <div class='row'>
@@ -481,7 +488,7 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            <!-- //TODO! CHMAPION MASTERIES -->
+                <!-- //TODO! CHMAPION MASTERIES -->
                 dasdas
             </div>
             <div class="tab-pane fade" id="league" role="tabpanel" aria-labelledby="league-tab">
@@ -518,8 +525,10 @@
                 </div>
             </div>
         </div>
-
-
+        <!-- //!Scripts -->
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script src="../../assets/js/win_lose_data.js"></script>
 </body>
 
 </html>

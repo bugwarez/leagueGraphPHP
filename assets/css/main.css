@@ -38,6 +38,10 @@ p{
     font-size: 1.4em;
     
 }
+.summoner_position
+{
+    width: 3vw;
+}
 .summoner_spell
 {
     padding: 0;
