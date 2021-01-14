@@ -114,10 +114,10 @@
                                 <h5 class="text-center">Recent Matches</h5>
                                 <!-- //TODO:WIN/LOSE RATE in "Drilldown" chart -->
                                 <!-- //TODO:DONT FORGET TO PUSH UPDATED CODE TO GITHUB -->
-                                <!-- //TODO:When this project finish, go for faceit style custom matchmaking and ranking website -->
+                                
                                 <?php
 
-                                foreach (array_slice($get_summoner_matches_obj["matches"], 0, 10) as $summoner_matches_data) {
+                                foreach (array_slice($get_summoner_matches_obj["matches"], 0, 5) as $summoner_matches_data) {
                                     echo "
                             <div class='card mb-3'><!-- FOREACH START -->
                                 <div class='row'>
@@ -144,8 +144,7 @@
 
 
 
-                                    //TODO: GET MATCH DATA.
-                                    //TODO: MATCH INGAME DATA JSON WITH PLAYER
+                                    //TODO!GET LANE ICONS BY NAME
                                     foreach ($get_summoner_match_data_obj as $gameData) {
                                         if ($get_summoner_match_data_obj['gameId'] == $summoner_matches_data['gameId']) {
 
@@ -186,6 +185,7 @@
                                                     break;
                                                 }
                                             }
+                                            
                                             foreach ($get_SummonerRunes_obj as $game_rune_data) {
 
 
@@ -216,7 +216,7 @@
                                                     break;
                                                 }
                                             }
-                                            //echo"as" . $get_SummonerRunes_obj;  
+                                            //TODO! GAME TIME
                                             echo "
                                                     
                                                         
@@ -262,6 +262,8 @@
                                                     </p>
                                                     ";
                                             $minion_count = $game_participants_data['stats']['totalMinionsKilled'] + $game_participants_data['stats']['neutralMinionsKilled'];
+                                             //TODO! KEY RUNE ICONS INSTEAD OF TYPE ICON
+                                            //TODO! Game History card background depends on match end 
                                             echo "
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-warning'>$minion_count CS</span></p>
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-danger'>" . $game_participants_data['stats']['totalDamageDealtToChampions'] . " Damage</span></p>
@@ -272,6 +274,9 @@
                                             <div class='vl'></div>
                                                 <div class='card-body mt-4'>
                                                 ";
+                                                //TODO! VISION SCORE
+                                                //TODO! Item Data on hover 
+                                                //TODO! INGAME DATA IN DROPDOWN MENU FOR RECENT MATCHES
                                             #region //!Item Slots
                                             //!Item Slots
                                             $item0 = $game_participants_data['stats']['item0'];
@@ -334,7 +339,7 @@
 
 
                                 ?>
-
+               
 
                             </div>
                         </div>
@@ -347,14 +352,9 @@
                     <div class="col-sm">
                         <div class="card">
                             <div class="card-body">
-                                <?php
-                                echo "live game data-" . $get_live_game_obj['gameId'];
-                                ?>
                                 <div class="card-group">
                                     <?php
-                                    //TODO:Foreach Loop Doesnt work
-                                    //!TUTORIAL VIDEO IS SAVED IN API TAB
-                                    
+                                    //?Blue Team
                                     foreach ($get_live_game_obj['participants'] as $blueTeam) {
                                         if ($blueTeam['teamId'] == 100) {
                                             echo "
@@ -367,42 +367,103 @@
                                                 if ($champion['key'] == $blueTeam['championId']) {
                                                     echo "<img loading='lazy'
                                                         src='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$champion[id]_0.jpg' class='card-img' alt='...'>";
-                                                    
                                                 }
                                             }
-                                            //TODO!FIX STYLING AND MAKE FOREACH FOR RED TEAM
-                                              echo"
+                                            
+                                            echo "
                                               <p class='card-text'>
                                               <div class='row'>
                                                     <div class='col-sm p-0 m-0'>
                                                     ";
-                                                    foreach ($get_SummonerSpells_obj['data'] as $live_game_spell_data) {
-                                                        if ($live_game_spell_data['key'] == $blueTeam['spell1Id']) {
-                                                            echo "
+                                            foreach ($get_SummonerSpells_obj['data'] as $live_game_spell_data) {
+                                                if ($live_game_spell_data['key'] == $blueTeam['spell1Id']) {
+                                                    echo "
                                                            
                                                             <img class='live_summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$live_game_spell_data[id].png'>
                                                             
                                                                 ";
-                                                            
-                                                        }
-                                                    }
-                                                    foreach ($get_SummonerSpells_obj['data'] as $live_game_spell_data) {
-                                                        if ($live_game_spell_data['key'] == $blueTeam['spell2Id']) {
-                                                            echo "
+                                                }
+                                            }
+                                            foreach ($get_SummonerSpells_obj['data'] as $live_game_spell_data) {
+                                                if ($live_game_spell_data['key'] == $blueTeam['spell2Id']) {
+                                                    echo "
                                                            
                                                             <img class='live_summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$live_game_spell_data[id].png'>
                                                             
                                                                 ";
-                                                            
-                                                        }
-                                                    }
-                                                    echo"
-                                                    </div>
-                                                    <div class='col-sm'>
-                                                    ";
+                                                }
+                                            }
 
+                                            echo "
+                                                    </div>
                                                     
-                                                    echo"
+                                                </div>
+                                              </p>
+                                            </div>
+                                          </div>
+                                                ";
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center p-0 m-0">
+                    <img style="width: 7vw; padding: 2.2vh!important;" src="../../assets/images/versus.png">
+                </p>
+
+                <!-- //!Red Team -->
+                <div style="margin: 0 !important; padding: 0 !important;" class="row">
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-group">
+                                    <?php
+//TODO!lIVE SUMMONER RUNES
+//TODO!SUMMONERS LEAGUES
+//TODO!GAME TIME
+                                    foreach ($get_live_game_obj['participants'] as $redTeam) {
+                                        if ($redTeam['teamId'] == 200) {
+                                            echo "
+                                            <div class='card text-black mb-3' style='max-width: 16rem;'>
+                                            <div class='card-header bg-danger text-white'>
+                                            <img class='live_summoner_icon mr-0' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/profileicon/$redTeam[profileIconId].png'>" . $redTeam['summonerName'] . "</div>
+                                            <div class='card-body'>
+                                            ";
+                                            foreach ($get_champs_obj['data'] as $champion) {
+                                                if ($champion['key'] == $redTeam['championId']) {
+                                                    echo "<img loading='lazy'
+                                                        src='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/$champion[id]_0.jpg' class='card-img' alt='...'>";
+                                                }
+                                            }
+                                            
+                                            echo "
+                                              <p class='card-text'>
+                                              <div class='row'>
+                                                    <div class='col-sm p-0 m-0'>
+                                                    ";
+                                            foreach ($get_SummonerSpells_obj['data'] as $live_game_spell_data) {
+                                                if ($live_game_spell_data['key'] == $redTeam['spell1Id']) {
+                                                    echo "
+                                                           
+                                                            <img class='live_summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$live_game_spell_data[id].png'>
+                                                            
+                                                                ";
+                                                }
+                                            }
+                                            foreach ($get_SummonerSpells_obj['data'] as $live_game_spell_data) {
+                                                if ($live_game_spell_data['key'] == $redTeam['spell2Id']) {
+                                                    echo "
+                                                           
+                                                            <img class='live_summoner_icon' src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$live_game_spell_data[id].png'>
+                                                            
+                                                                ";
+                                                }
+                                            }
+
+                                            echo "
                                                     </div>
                                                     
                                                 </div>
@@ -420,6 +481,7 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <!-- //TODO! CHMAPION MASTERIES -->
                 dasdas
             </div>
             <div class="tab-pane fade" id="league" role="tabpanel" aria-labelledby="league-tab">
@@ -427,7 +489,8 @@
                     <div class="card-body">
                         <div class="container">
                             <div class="row text-center">
-                                <!-- //TODO:Show Unranked icon if user has no league -->
+                                <!-- //TODO!Show Unranked icon if user has no league -->
+                                <!-- //TODO! ALL LEAGUE DATA -->
                                 <?php
                                 echo "
                                 <div class='col-sm'>

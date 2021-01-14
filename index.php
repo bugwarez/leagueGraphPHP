@@ -7,7 +7,7 @@
     <title>LeagueStats</title>
 </head>
 <?php
-
+//TODO! FREE CHAMPION ROTATION
 if (isset($_POST['summoner_name'])) {
     $summoner_name = $_POST["summoner_name"];
     $server = $_POST["summoner_server"];
@@ -22,6 +22,9 @@ if (isset($_POST['summoner_name'])) {
     </div>
     <!-- //! MAKE A LOADER FOR LONG LOAD TIMES(FINDING YOUR SUMMONER... , PACKAGING YOUR LEAGUE..., ETC) -->
     <div class="container text-center">
+        <p class="text-center p-0 m-0">
+            <img style="width: 21vw; border:3px solid #7994A1; border-radius:8px;" src="https://media4.giphy.com/media/YbFasFa6Fh5HW/giphy.gif">
+        </p>
         <div class="row mt-5">
         
             <div class="col-sm">
