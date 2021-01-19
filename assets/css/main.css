@@ -10,6 +10,7 @@ body
     height: 100%;
     background: #f8f8f8 !important;
 }
+
 p{
     font-weight: 550;
 }
@@ -57,6 +58,14 @@ p{
     border: 2.7px solid #7994A1;
     margin-top: 2vh;
     width: 2.2vw;
+}
+.summoner_perk0_rune
+{
+    padding: .6vh;
+    border-radius: 5px;
+    border: 2.7px solid #7994A1;
+    margin-top: 2vh;
+    width: 2.6vw;
 }
 .summoner_league_card
 {
@@ -116,6 +125,40 @@ p{
     height: 8vh !important;
     
 }
+.recent-match-champ
+{
+    
+    border-radius: 50%;
+    width: 4vw;
+}
+.recent-match-rune
+{
+    padding: 0;
+    border-radius: 10%;
+    width: 2.2vw !important;
+}
+.recent-match-primary-rune
+{
+    margin-left: 1vw;
+    padding: 0;
+    border-radius: 10%;
+    width: 2.4vw !important;
+}
+.recent-match-sub-rune
+{
+    margin-left: .4vw;
+    padding: 0;
+    border-radius: 10%;
+    width: 1.8vw !important;
+}
+.recent_champ_level
+{
+    font-size: .60em !important;
+    position: absolute;
+    margin-bottom: 50%;
+    margin-right: 10%;
+    
+}
 .vl {
     position: absolute;
     top: 2.7vh;
@@ -135,3 +178,27 @@ p{
 
 
   
+/* !region accordion */
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 1vw;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+  }
+  
+  .accordion:hover {
+    background-color: #198754;
+    color: white;
+  }
+  
+  .panel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+  }

@@ -52,10 +52,12 @@ $get_summoner_league_json = file_get_contents("$get_summoner_league");
 $get_summoner_league_obj = json_decode($get_summoner_league_json, true);
 
 //!------------
+
 //*---get Current Game Data
 $get_live_game_url = "https://tr1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/$summoner_id?api_key=$api_key";
 $get_live_game_json = file_get_contents("$get_live_game_url");
 $get_live_game_obj = json_decode($get_live_game_json, true);
 //*----END Current Game Data
 //!------------
+
 ?>

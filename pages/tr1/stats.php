@@ -5,11 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <title>Summoner Stats</title>
 
 </head>
 
 <body>
+
     <?php include "../../config/config.php" ?>
     <?php include "../../components/navbar.php" ?>
     <?php
@@ -106,7 +110,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <!-- //!Match History Tab -->
+                <!-- //TODO!Match History Tab -->
                 <div class="row mt-2">
                     <div class="col-sm mt-0">
                         <div class="card mt-0">
@@ -144,11 +148,11 @@
 
 
 
-                                    
+
                                     foreach ($get_summoner_match_data_obj as $gameData) {
                                         if ($get_summoner_match_data_obj['gameId'] == $summoner_matches_data['gameId']) {
 
-                                            //! CODE DIFFERENT FOREACH FOR EVERY ARRAY
+
                                             foreach ($get_summoner_match_data_obj['participants'] as $game_participants_data) {
                                                 if ($game_participants_data['championId'] == $summoner_matches_data['champion']) {
                                                     break;
@@ -194,7 +198,7 @@
                                                     echo "
                                                             <div class='row'>
                                                         <div class='col-6 p-0 m-0'>
-                                                        <img class='summoner_rune p-0 mt-1' src='http://ddragon.leagueoflegends.com/cdn/img/$game_rune_data[icon]'>
+                                                        <img class='summoner_perk0_rune p-0 mt-1' src='/assets/images/perk0/" . $game_participants_data['stats']['perk0'] . ".png'>
                                                         </div>
                                                             
                                                         ";
@@ -219,7 +223,7 @@
                                             echo "<p class='mt-2'>
                                             <img class='summoner_position' src='../../assets/images/positions/$summoner_matches_data[lane]$summoner_matches_data[role].png'>
                                             </p>";
-                                            
+
                                             echo "
                                                     
                                                         
@@ -254,8 +258,8 @@
                                                       </span>
                                                       </p>";
                                             }
-                                            
-                                            
+
+
                                             echo "
                                                      
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-primary'>
@@ -272,7 +276,7 @@
                                             echo "
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-warning'>$minion_count CS</span></p>
                                                     <p class='card-text p-0 m-0'><span class='badge badge_text alert-danger'>" . $game_participants_data['stats']['totalDamageDealtToChampions'] . " Damage</span></p>
-                                                    <p class='card-title p-0 m-0'><span class='badge badge_text alert-info'>" . date('i' , $get_summoner_match_data_obj['gameDuration']) ."m " . date('s' , $get_summoner_match_data_obj['gameDuration']) ."s</span></p>
+                                                    <p class='card-title p-0 m-0'><span class='badge badge_text alert-info'>" . date('i', $get_summoner_match_data_obj['gameDuration']) . "m " . date('s', $get_summoner_match_data_obj['gameDuration']) . "s</span></p>
                                                     
 
                                                     </div>
@@ -332,10 +336,259 @@
                                             #endregion
 
                                             echo "
-                                                </div>
-                                            </div>
                                             
+                                                </div>
+                                                
+                                                
+                                                
+                                            </div>
+                                           
                                          </div>
+                                         <button class='accordion'>Match Details</button>
+                                                    <div class='panel'>
+                                                        <div class='row my-4'>
+                                                            <div class='col-sm'>
+                                                            ";
+                                            foreach ($get_summoner_match_data_obj['participants'] as $recent_blue_team) {
+                                                if ($recent_blue_team['teamId'] == 100) {
+                                                    foreach ($get_champs_obj['data'] as $champion) {
+                                                        if ($champion['key'] == $recent_blue_team['championId']) {
+                                                            echo "
+                                                                            <p>
+                                                                            <div class='card'>
+                                                                            <div class='row'>
+                                                                                <div class='card-body'>
+                                                                                <div class='row'>
+                                                                                    <div class='col-2'>
+                                                                                    <h6 class='text-left pt-2'><span class='badge badge_text alert-danger recent_champ_level rounded-circle'>" . $recent_blue_team['stats']['champLevel'] . "</span></h6>
+                                                                                <img loading='lazy'
+                                                                                src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/champion/$champion[id].png' class='recent-match-champ' alt='...'>
+                                                                                    </div>
+                                                                                    ";
+
+
+                                                            echo "
+                                                                               
+                                                                               
+                                                                                    
+                                                                                    <div class='col-1 mt-2 ml-0 p-0 align-middle'>
+                                                                                    ";
+                                                            foreach ($get_SummonerSpells_obj['data'] as $recent_game_spell_data) {
+                                                                if ($recent_game_spell_data['key'] == $recent_blue_team['spell1Id']) {
+                                                                    echo "
+                                                                                                   
+                                                                                            <img loading='lazy'
+                                                                                            src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$recent_game_spell_data[id].png' class='recent-match-rune' alt='...'>
+                                                                                                    
+                                                                                                        ";
+                                                                }
+                                                            }
+                                                            echo "
+                                                                                    
+                                                                               <hr style='padding:.1px; margin:0; height:.25vh;'>
+                                                                               ";
+                                                            foreach ($get_SummonerSpells_obj['data'] as $recent_game_spell_data) {
+                                                                if ($recent_game_spell_data['key'] == $recent_blue_team['spell2Id']) {
+                                                                    echo "
+                                                                                           
+                                                                                    <p>
+                                                                               <img loading='lazy'
+                                                                                    src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$recent_game_spell_data[id].png' class='recent-match-rune' alt='...'>
+                                                                               </p>
+                                                                               </div> ";
+                                                                }
+                                                            }
+                                                            echo "
+                                                                                    <div class='col-1 mt-2 ml-0 p-0 align-middle'>
+                                                                                    <img loading='lazy'
+                                                                               src='/assets/images/perk0/" . $recent_blue_team['stats']['perk0'] . ".png' class='recent-match-rune' alt='...'>
+                                                                               <hr style='padding:.1px; margin:0; height:.25vh;'>
+                                                                               <p>
+                                                                               ";
+
+                                                            foreach ($get_SummonerRunes_obj as $game_rune_data) {
+
+
+                                                                if ($game_rune_data['id'] == $recent_blue_team['stats']['perkSubStyle']) {
+
+                                                                    echo "
+                                                                                    <img loading='lazy'
+                                                                                    src='http://ddragon.leagueoflegends.com/cdn/img/$game_rune_data[icon]' class='recent-match-sub-rune' alt='...'>
+                                                                               </p>
+                                                                                            
+                                                                                            
+                                                                               </div>";
+                                                                    break;
+                                                                }
+                                                            }
+                                                            echo "
+                                                                               
+                                                                               
+                                                                                    
+                                                                                    <div class='col-4 text-left p-0'>
+                                                                                    ";
+                                                            foreach ($get_summoner_match_data_obj['participantIdentities'] as $recent_blue_team_identities) {
+                                                                if ($recent_blue_team['participantId'] == $recent_blue_team_identities['participantId']) {
+
+                                                                    echo "<p style='margin-top:2vh !important;margin-left:1vw !important;padding:0 !important;'>" . $recent_blue_team_identities['player']['summonerName'] . "</p>";
+                                                                    $recent_summoner_id = $recent_blue_team_identities['player']['summonerId'];
+                                                                    
+                                                                    $get_recent_summoner_league = "https://tr1.api.riotgames.com/lol/league/v4/entries/by-summoner/$recent_summoner_id?api_key=$api_key";
+                                                                    $get_recent_summoner_league_json = file_get_contents("$get_recent_summoner_league");
+                                                                    $get_recent_summoner_league_obj = json_decode($get_recent_summoner_league_json, true);
+
+                                                                    //!------------
+                                                                    echo "<p style='margin-top:2vh !important;margin-left:1vw !important;padding:0 !important;'>" . $get_recent_summoner_league_obj[0]['tier'] . " " . $get_recent_summoner_league_obj[0]['rank'] . "</p>";
+                                                                       
+                                                                                
+                                                                    
+
+                                                                }
+                                                            }
+
+
+
+                                                            echo "
+                                                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                
+                                                                                
+                                                                                
+                                                                                ";
+
+                                                            echo "
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                            </p>";
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            echo "
+
+                                                            </div>
+                                                            <div class='col-1 text-center my-auto'>
+                                                            <p class='text-center p-0 m-0'>
+                                                            <img style='width: 4vw;' src='../../assets/images/versus.png'>
+                                                        </p>
+                                                            </div>
+                                                            <div class='col-sm'>
+                                                            <p>
+                                                            ";
+                                            foreach ($get_summoner_match_data_obj['participants'] as $recent_red_team) {
+                                                if ($recent_red_team['teamId'] == 200) {
+                                                    foreach ($get_champs_obj['data'] as $champion) {
+                                                        if ($champion['key'] == $recent_red_team['championId']) {
+                                                            echo "
+                                                                            <p>
+                                                                            <div class='card'>
+                                                                            <div class='row'>
+                                                                                <div class='card-body'>
+                                                                                <div class='row'>
+                                                                                    <div class='col-2'>
+                                                                                    <h6 class='text-left pt-2'><span class='badge badge_text alert-primary recent_champ_level rounded-circle'>" . $recent_red_team['stats']['champLevel'] . "</span></h6>
+                                                                                <img loading='lazy'
+                                                                                src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/champion/$champion[id].png' class='recent-match-champ' alt='...'>
+                                                                                    </div>
+                                                                                    ";
+
+
+                                                            echo "
+                                                                               
+                                                                               
+                                                                                    
+                                                                                    <div class='col-1 mt-2 ml-0 p-0 align-middle'>
+                                                                                    ";
+                                                            foreach ($get_SummonerSpells_obj['data'] as $recent_game_spell_data) {
+                                                                if ($recent_game_spell_data['key'] == $recent_red_team['spell1Id']) {
+                                                                    echo "
+                                                                                                   
+                                                                                            <img loading='lazy'
+                                                                                            src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$recent_game_spell_data[id].png' class='recent-match-rune' alt='...'>
+                                                                                                    
+                                                                                                        ";
+                                                                }
+                                                            }
+                                                            echo "
+                                                                                    
+                                                                               <hr style='padding:.1px; margin:0; height:.25vh;'>
+                                                                               ";
+                                                            foreach ($get_SummonerSpells_obj['data'] as $recent_game_spell_data) {
+                                                                if ($recent_game_spell_data['key'] == $recent_red_team['spell2Id']) {
+                                                                    echo "
+                                                                                           
+                                                                                    <p>
+                                                                               <img loading='lazy'
+                                                                                    src='http://ddragon.leagueoflegends.com/cdn/11.1.1/img/spell/$recent_game_spell_data[id].png' class='recent-match-rune' alt='...'>
+                                                                               </p>
+                                                                               </div> ";
+                                                                }
+                                                            }
+                                                            echo "
+                                                                                    <div class='col-1 mt-2 ml-0 p-0 align-middle'>
+                                                                                    <img loading='lazy'
+                                                                               src='/assets/images/perk0/" . $recent_red_team['stats']['perk0'] . ".png' class='recent-match-rune' alt='...'>
+                                                                               <hr style='padding:.1px; margin:0; height:.25vh;'>
+                                                                               <p>
+                                                                               ";
+
+                                                            foreach ($get_SummonerRunes_obj as $game_rune_data) {
+
+
+                                                                if ($game_rune_data['id'] == $recent_red_team['stats']['perkSubStyle']) {
+
+                                                                    echo "
+                                                                                    <img loading='lazy'
+                                                                                    src='http://ddragon.leagueoflegends.com/cdn/img/$game_rune_data[icon]' class='recent-match-sub-rune' alt='...'>
+                                                                               </p>
+                                                                                            
+                                                                                            
+                                                                               </div>";
+                                                                    break;
+                                                                }
+                                                            }
+                                                            echo "
+                                                                               
+                                                                               
+                                                                                    
+                                                                                    <div class='col-4 text-left p-0'>
+                                                                                    ";
+                                                            foreach ($get_summoner_match_data_obj['participantIdentities'] as $recent_red_team_identities) {
+                                                                if ($recent_red_team['participantId'] == $recent_red_team_identities['participantId']) {
+
+                                                                    echo "<p style='margin-top:2vh !important;margin-left:1vw !important;padding:0 !important;'>" . $recent_red_team_identities['player']['summonerName'] . "</p>";
+                                                                    echo "<p style='margin-top:0vh !important;margin-left:1vw !important;padding:0 !important;'>" . $recent_red_team_identities['player']['summonerName'] . "</p>";
+                                                                }
+                                                            }
+                                                            echo "
+                                                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                
+                                                                                
+                                                                                
+                                                                                ";
+
+                                                            echo "
+                                                                                </div>
+                                                                                </div>
+                                                                                </div>
+                                                                            </p>";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            echo "
+                                                            
+                                                            
+                                                            
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    
                                         </div>
                                          <!-- FOREACH END -->
                                         ";
@@ -526,6 +779,8 @@
             </div>
         </div>
         <!-- //!Scripts -->
+        <script src="../../assets/js/accordion.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="../../assets/js/win_lose_data.js"></script>
