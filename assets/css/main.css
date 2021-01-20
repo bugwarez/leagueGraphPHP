@@ -127,9 +127,9 @@ p{
 }
 .recent-match-champ
 {
-    
+    margin-left: 1vw;
     border-radius: 50%;
-    width: 4vw;
+    width: 4.4vw;
 }
 .recent-match-rune
 {
@@ -153,9 +153,10 @@ p{
 }
 .recent_champ_level
 {
-    font-size: .60em !important;
+    margin-left: .62vw;
+    font-size: .68em !important;
     position: absolute;
-    margin-bottom: 50%;
+    margin-bottom: 60%;
     margin-right: 10%;
     
 }
